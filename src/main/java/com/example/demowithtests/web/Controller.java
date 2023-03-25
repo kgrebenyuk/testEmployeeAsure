@@ -140,6 +140,7 @@ public class Controller {
         service.sendEmailByCity(cities, text);
     }
 
+
  /*   @PostMapping("/fillingDataBase/{quantity}")
     @ResponseStatus(HttpStatus.OK)
     public void fillingDataBase(@PathVariable String quantity) {
@@ -191,5 +192,21 @@ public class Controller {
     public void updateAllByCountrySmart(@RequestParam String oldCountry, @RequestParam String newCountry) {
         service.updateAllByCountrySmart(oldCountry, newCountry);
     }
+
+
+//    @PostMapping("/sendEmailOldFoto")
+//    @ResponseStatus(HttpStatus.OK)
+//    public void sendEmailOldFoto(@RequestParam String text) {
+//        service.sendEmailOldFoto(text);
+//
+//    }
+
+    @PostMapping("/sendEmailOldFoto")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Employee> sendEmailOldFoto(@RequestParam String text) {
+        return service.sendEmailOldFoto(text);
+
+    }
+
 
 }

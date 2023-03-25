@@ -1,15 +1,20 @@
 package com.example.demowithtests.service;
 
 import com.example.demowithtests.domain.Employee;
+import com.example.demowithtests.domain.Foto;
 import com.example.demowithtests.repository.Repository;
 import com.example.demowithtests.util.*;
+import lombok.Data;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.event.Level;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -117,7 +122,7 @@ public class ServiceBean implements Service {
 
 
     public void mailSender(List<String> emails, String text) {
-        //log.info("Emails sended");
+        log.info("---->>  Emails sent successfully ", emails);
     }
 
     @Override
@@ -136,8 +141,11 @@ public class ServiceBean implements Service {
             employees.addAll(employeesByCity);
         }
         mailSender(getterEmailsOfEmployees(employees), text);
+
         return employees;
     }
+
+
 
 /*    @Override
     public void fillingDataBase(String quantityString) {
@@ -246,6 +254,19 @@ public class ServiceBean implements Service {
                 employee.setCountry(newCountry);
                 repository.save(employee);
             }
+    }
+
+    @Override
+    public List<Employee> sendEmailOldFoto(String text) {
+        Date data = Date.from(Instant.now());
+        data.setYear(data.getYear() - 1);
+
+        List<Employee> employees = repository.findEmployeeOldFoto(data);
+        mailSender(getterEmailsOfEmployees(employees), text);
+
+        log.info(" --->> List of employees with old foto: ", employees);
+
+        return employees;
     }
 
 }

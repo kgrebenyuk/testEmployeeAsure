@@ -19,7 +19,7 @@ public class EmployeeDto {
 //    public Set<FotoDto> fotos = new HashSet<>();
 //    public Set<AddressDto> addresses = new HashSet<>();
 
-    public Set<Foto> fotos = new HashSet<>();
-    public Set<Address> addresses = new HashSet<>();
+    public Set<FotoDto> fotos = new HashSet<>();
+    public Set<AddressDto> addresses = new HashSet<>();
 
 }

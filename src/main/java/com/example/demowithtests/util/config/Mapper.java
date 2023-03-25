@@ -18,7 +18,7 @@ public interface Mapper {
     @Mapping(target="name", source="employee.name")
     @Mapping(target="country", source="employee.country")
     @Mapping(target="email", source="employee.email")
- //   @Mapping(target="fotos", source="employee.fotos")
+    @Mapping(target="fotos", source="employee.fotos")
     @Mapping(target="addresses", source="employee.addresses")
     EmployeeDto  employeeToEmployeeDto(Employee employee);
 

@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 public class ServiceBean implements Service {
     private final Repository repository;
 
-  //  private static final Logger log = Logger.getLogger(ServiceBean.class.getName());
+    //  private static final Logger log = Logger.getLogger(ServiceBean.class.getName());
 
     public ServiceBean(Repository repository) {
         this.repository = repository;
@@ -33,12 +33,9 @@ public class ServiceBean implements Service {
     // @SneakyThrows
     @Override
     public Employee create(Employee employee) {
-        if (repository.findEmployeeByEmail(employee.getEmail()) == null) {
-            if (employee.getEmail() == null) {
-                throw new EmailAbsentException();
-            }
-            return repository.save(employee);
-        }
+        if (employee.getEmail() == null) throw new EmailAbsentException();
+//      if (repository.findEmployeeByEmail(employee.getEmail()) != null) throw new EmailDoubledException();
+
         return repository.save(employee);
     }
 
@@ -56,7 +53,7 @@ public class ServiceBean implements Service {
 
     @Override
     public Employee getById(String id) {
-       // log.debug("----> getById() - start: id = {}", id);
+        // log.debug("----> getById() - start: id = {}", id);
 
         try {
             Integer employeeId = Integer.parseInt(id);
@@ -66,12 +63,12 @@ public class ServiceBean implements Service {
                 throw new ResourceWasDeletedException();
             }
 
-          //  log.debug("----> getById() -try  employee = {}", employee);
+            //  log.debug("----> getById() -try  employee = {}", employee);
 
             return employee;
         } catch (NumberFormatException exception) {
 
-          //  log.debug("----> getById() - end: employee = {}", exception);
+            //  log.debug("----> getById() - end: employee = {}", exception);
 
             throw new WrongDataException();
 

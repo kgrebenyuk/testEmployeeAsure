@@ -16,9 +16,6 @@ public class EmployeeDto {
     public String email;
     public Date creationTime = Date.from(Instant.now());
 
-//    public Set<FotoDto> fotos = new HashSet<>();
-//    public Set<AddressDto> addresses = new HashSet<>();
-
     public Set<FotoDto> fotos = new HashSet<>();
     public Set<AddressDto> addresses = new HashSet<>();
 

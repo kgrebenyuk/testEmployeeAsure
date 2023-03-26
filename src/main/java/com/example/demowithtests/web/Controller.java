@@ -7,6 +7,10 @@ import com.example.demowithtests.service.Service;
 //import com.example.demowithtests.service.ServiceBean;
 //import com.example.demowithtests.util.UserIsNotExistException;
 import com.example.demowithtests.util.config.Mapper;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -23,6 +27,7 @@ import java.util.List;
 @RestController
 //@AllArgsConstructor
 @RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
+@Tag(name = "Employee", description = "Employee API")
 public class Controller {
 
     private final Service service;
@@ -38,14 +43,22 @@ public class Controller {
 
 
     /////////////////
+    @Operation(summary = "This is endpoint to add a new employee.", description = "Create request to add a new employee.", tags = {"Employee"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "CREATED. The new employee is successfully created and added to database."),
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND. Specified employee request not found."),
+            @ApiResponse(responseCode = "409", description = "Employee already exists")})
     //Операция сохранения юзера в базу данных
     @PostMapping("/users")
     @ResponseStatus(HttpStatus.CREATED)
-    public EmployeeDto saveEmployee(@RequestBody EmployeeDto employeeDto) {
+ //   public EmployeeDto saveEmployee(@RequestBody EmployeeDto employeeDto) {
+    public EmployeeReadDto saveEmployee(@RequestBody EmployeeDto employeeDto) {
         log.info("----> saveEmployee - start: EmployeeDto = {}", employeeDto);
 
         Employee employee = mapper.employeeDtoToEmployee(employeeDto);
-        EmployeeDto dto = mapper.employeeToEmployeeDto(service.create(employee));
+     //   EmployeeDto dto = mapper.employeeToEmployeeDto(service.create(employee));
+        EmployeeReadDto dto = mapper.employeeToEmployeeReadDto(service.create(employee));
 
         log.info("----> saveEmployee - end: EmployeeDto = {}", dto);
         return dto;

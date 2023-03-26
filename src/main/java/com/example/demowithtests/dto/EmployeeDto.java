@@ -15,12 +15,20 @@ public class EmployeeDto {
 
     @Schema(description = "Name of an employee.", example = "Billy", required = true)
     public String name;
+
+    @Schema(description = "Country of an employee.", example = "Ukraine", required = true)
     public String country;
+
+    @Schema(description = "Email of an employee.", example = "Billy@gmail.com", required = true)
     public String email;
+
+    @Schema(description = "Creation Time of an employee.", example = "", required = false)
     public Date creationTime = Date.from(Instant.now());
     public Boolean isDeleted = Boolean.FALSE;
 
+    @Schema(description = "Fotos of an employee.", example = "", required = true)
     public Set<FotoDto> fotos = new HashSet<>();
+    @Schema(description = "Addresses of an employee.", example = "", required = true)
     public Set<AddressDto> addresses = new HashSet<>();
 
 }

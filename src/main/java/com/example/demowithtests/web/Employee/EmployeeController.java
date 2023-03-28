@@ -109,4 +109,17 @@ public interface EmployeeController {
             @ApiResponse(responseCode = "201", description = "SENT. Employees by 'fromCountry', 'toCountry' are informed successfully."),
             @ApiResponse(responseCode = "400", description = "Invalid input")})
     void metricsByCountry(@RequestParam String fromCountry, @RequestParam String toCountry, @RequestParam String text);
+
+//    @Operation(summary = "This is endpoint to replace 'null' to 'false' of IsDeleted of employees.", description = "Update request to replace 'null' to 'false' of IsDeleted of employees.", tags = {"Employee"})
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "201", description = "UPDATED. All employees' IsDeleted are updated successfully."),
+//            @ApiResponse(responseCode = "400", description = "Invalid input")})
+//    void replaceNull();
+
+    @Operation(summary = "This is endpoint to add the passport to employee.", description = "Update request to add an passport to employee.", tags = {"Passport"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "UPTADED. The requested passport is added successfully."),
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND. Specified passport request not found.")})
+    void addPassport(@RequestParam Integer employeeId, @RequestParam Integer passportId);
 }

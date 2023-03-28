@@ -2,6 +2,7 @@ package com.example.demowithtests.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 //import org.apache.tomcat.jni.Address;
 
@@ -14,6 +15,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Data
 public class Employee {
 
     @Id
@@ -32,6 +34,10 @@ public class Employee {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "employee_id")
     private Set<Foto> fotos = new HashSet<>();
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "passport_id",referencedColumnName = "id")
+    private Passport passport;
 
     public Employee(String name, String country, String email) {
         this.name = name;

@@ -1,10 +1,12 @@
 package com.example.demowithtests.service.Employee;
 
 import com.example.demowithtests.domain.Employee;
+import com.example.demowithtests.domain.Passport;
 import com.example.demowithtests.repository.EmployeeRepository;
+import com.example.demowithtests.repository.PassportRepository;
 import com.example.demowithtests.util.*;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,19 +22,20 @@ import java.util.List;
 //import static org.apache.logging.log4j.util.LowLevelLogUtil.log;
 
 
-//@AllArgsConstructor
-//@AllArgsConstructor
-//@NoArgsConstructor
-@Service
 @Slf4j
+@AllArgsConstructor
+//@NoArgsConstructor
+@Data
+@Service
 public class EmployeeServiceBean implements EmployeeService {
-    private final EmployeeRepository repository;
+    private final EmployeeRepository employeeRepository;
+    private final PassportRepository passportRepository;
 
     //  private static final Logger log = Logger.getLogger(EmployeeServiceBean.class.getName());
 
-    public EmployeeServiceBean(EmployeeRepository repository) {
-        this.repository = repository;
-    }
+//    public EmployeeServiceBean(EmployeeRepository employeeRepository) {
+//        this.employeeRepository = employeeRepository;
+//    }
 
 
     // @SneakyThrows
@@ -41,16 +44,16 @@ public class EmployeeServiceBean implements EmployeeService {
         if (employee.getEmail() == null) throw new EmailAbsentException();
 //      if (repository.findEmployeeByEmail(employee.getEmail()) != null) throw new EmailDoubledException();
 
-        return repository.save(employee);
+        return employeeRepository.save(employee);
     }
 
     @Override
     public List<Employee> getAll() {
-        if (repository.findAll().size() > 0) {
-            if (repository.findAll().size() == repository.findEmployeeByIsDeletedIsTrue().size()) {
+        if (employeeRepository.findAll().size() > 0) {
+            if (employeeRepository.findAll().size() == employeeRepository.findEmployeeByIsDeletedIsTrue().size()) {
                 throw new ListWasDeletedException();
             }
-            return repository.findAll();
+            return employeeRepository.findAll();
         }
         throw new ListHasNoAnyElementsException();
 
@@ -61,8 +64,8 @@ public class EmployeeServiceBean implements EmployeeService {
         // log.debug("----> getById() - start: id = {}", id);
 
         try {
-           // Integer employeeId = Integer.parseInt(id);
-            Employee employee = repository.findById(id)
+            // Integer employeeId = Integer.parseInt(id);
+            Employee employee = employeeRepository.findById(id)
                     .orElseThrow(IdIsNotExistException::new);
             if (employee.getIsDeleted()) {
                 throw new ResourceWasDeletedException();
@@ -84,33 +87,33 @@ public class EmployeeServiceBean implements EmployeeService {
     //@SneakyThrows
     @Override
     public Employee updateById(Integer id, Employee employee) throws UserIsNotExistException {
-        return repository.findById(id)
+        return employeeRepository.findById(id)
                 .map(entity -> {
                     entity.setName(employee.getName());
                     entity.setEmail(employee.getEmail());
                     entity.setCountry(employee.getCountry());
-                    return repository.save(entity);
+                    return employeeRepository.save(entity);
                 })
                 .orElseThrow(UserIsNotExistException::new);
     }
 
     @Override
     public void removeById(Integer id) {
-        Employee employee = repository.findById(id)
+        Employee employee = employeeRepository.findById(id)
                 .orElseThrow(IdIsNotExistException::new);
         if (employee.getDeleted()) throw new UserAlreadyDeletedException();
         employee.setIsDeleted(true);
-        repository.save(employee);
+        employeeRepository.save(employee);
     }
 
     @Override
     public void removeAll() {
 
-        if (repository.findAll().size() > 0) {
-            if (repository.findAll().size() == repository.findEmployeeByIsDeletedIsTrue().size()) {
+        if (employeeRepository.findAll().size() > 0) {
+            if (employeeRepository.findAll().size() == employeeRepository.findEmployeeByIsDeletedIsTrue().size()) {
                 throw new ListWasDeletedException();
             }
-            List<Employee> base = repository.findAll();
+            List<Employee> base = employeeRepository.findAll();
             for (Employee employee : base) {
                 employee.setIsDeleted(true);
             }
@@ -125,7 +128,7 @@ public class EmployeeServiceBean implements EmployeeService {
 
     @Override
     public List<Employee> sendEmailByCountry(String country, String text) {
-        List<Employee> employees = repository.findEmployeeByCountry(country);
+        List<Employee> employees = employeeRepository.findEmployeeByCountry(country);
         mailSender(getterEmailsOfEmployees(employees), text);
         return employees;
     }
@@ -135,7 +138,7 @@ public class EmployeeServiceBean implements EmployeeService {
         List<String> citiesList = Arrays.asList(citiesArray);
         List<Employee> employees = new ArrayList<>();
         for (String city : citiesList) {
-            List<Employee> employeesByCity = repository.findEmployeeByAddresses(city);
+            List<Employee> employeesByCity = employeeRepository.findEmployeeByAddresses(city);
             employees.addAll(employeesByCity);
         }
         mailSender(getterEmailsOfEmployees(employees), text);
@@ -165,10 +168,10 @@ public class EmployeeServiceBean implements EmployeeService {
 
     @Override
     public void updaterByCountryFully(String countries) {
-        List<Employee> employees = repository.findAll();
+        List<Employee> employees = employeeRepository.findAll();
         for (Employee employee : employees) {
             employee.setCountry(randomCountry(countries));
-            repository.save(employee);
+            employeeRepository.save(employee);
         }
     }
 
@@ -188,14 +191,14 @@ public class EmployeeServiceBean implements EmployeeService {
     @Override
     public List<Employee> processor() {
         //log.info("replace null  - start");
-        List<Employee> replaceNull = repository.findEmployeeByIsDeletedNull();
+        List<Employee> replaceNull = employeeRepository.findEmployeeByIsDeletedNull();
         //log.info("replace null after replace: " + replaceNull);
         for (Employee emp : replaceNull) {
             emp.setIsDeleted(Boolean.FALSE);
         }
         //log.info("replaceNull = {} ", replaceNull);
         //log.info("replace null  - end:");
-        return repository.saveAll(replaceNull);
+        return employeeRepository.saveAll(replaceNull);
     }
 
 
@@ -225,28 +228,28 @@ public class EmployeeServiceBean implements EmployeeService {
     public void fillDB(int numberOfTimes, String countriesList) {
         for (int i = 0; i <= numberOfTimes; i++) {
             Employee employee = new Employee("name", randomCountry(countriesList), "email.gmail.com");
-            repository.save(employee);
+            employeeRepository.save(employee);
         }
     }
 
     @Override
     @Transactional
     public void updateAllByCountry(String newCountry) {
-        List<Employee> employees = repository.findAll();
+        List<Employee> employees = employeeRepository.findAll();
         for (Employee employee : employees)
             employee.setCountry(newCountry);
-        repository.saveAll(employees);
+        employeeRepository.saveAll(employees);
 
     }
 
     @Override
     @Transactional
     public void updateAllByCountrySmart(String oldCountry, String newCountry) {
-        List<Employee> employees = repository.findAll();
+        List<Employee> employees = employeeRepository.findAll();
         for (Employee employee : employees)
             if (employee.getCountry().equals(oldCountry)) {
                 employee.setCountry(newCountry);
-                repository.save(employee);
+                employeeRepository.save(employee);
             }
     }
 
@@ -255,7 +258,7 @@ public class EmployeeServiceBean implements EmployeeService {
         Date data = Date.from(Instant.now());
         data.setYear(data.getYear() - 1);
 
-        List<Employee> employees = repository.findEmployeeOldFoto(data);
+        List<Employee> employees = employeeRepository.findEmployeeOldFoto(data);
         mailSender(getterEmailsOfEmployees(employees), text);
 
         log.info(" --->> List of employees with old foto: " + employees);
@@ -273,6 +276,16 @@ public class EmployeeServiceBean implements EmployeeService {
 //                        .anyMatch(address -> address.getCountry().equals(country)))
 //                .collect(Collectors.toList());
 
-        mailSender(repository.findEmployeeChangedCountry( fromCountry,  toCountry), text);
+        mailSender(employeeRepository.findEmployeeChangedCountry(fromCountry, toCountry), text);
+    }
+
+    @Override
+    public Employee addPassport(Integer employeeId, Integer passportId) {
+        log.info("----> addPassport() - start: ", employeeId, passportId);
+        Employee employee = employeeRepository.findById(employeeId).orElseThrow(IdIsNotExistException::new);
+        Passport passport = passportRepository.findById(passportId).orElseThrow(IdIsNotExistException::new);
+        employee.setPassport(passport);
+        log.info("----> addPassport() - end: EmployeeReadDto = {}", employeeId, passportId);
+        return employeeRepository.save(employee);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.demowithtests.service.Employee;
 
 import com.example.demowithtests.domain.Employee;
+import com.example.demowithtests.domain.Passport;
 import com.example.demowithtests.util.UserIsNotExistException;
 
 import java.util.List;
@@ -31,7 +32,6 @@ public interface EmployeeService {
 
     List<Employee> processor();
 
-//////////////////////
     String randomCountry(String countriesList);
 
     void fillDB(int numberOfTimes, String countriesString);
@@ -40,8 +40,8 @@ public interface EmployeeService {
 
     void updateAllByCountrySmart(String oldCountry, String newCountry);
 
- //   List<Employee> metricsByCountry(String fromCountry, String toCountry);
     void metricsByCountry(String fromCountry, String toCountry, String text);
 
+    Employee addPassport(Integer employeeId, Integer passportId);
 
 }

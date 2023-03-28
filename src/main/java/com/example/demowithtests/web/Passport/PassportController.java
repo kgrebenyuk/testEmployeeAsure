@@ -1,5 +1,6 @@
 package com.example.demowithtests.web.Passport;
 
+import com.example.demowithtests.domain.Employee;
 import com.example.demowithtests.dto.Passport.RequestDto;
 import com.example.demowithtests.dto.Passport.ResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -7,6 +8,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import java.util.List;
 
 public interface PassportController {
@@ -33,12 +36,11 @@ public interface PassportController {
             @ApiResponse(responseCode = "400", description = "Invalid input")})
     List<ResponseDto> getAllPassports();
 
-
     @Operation(summary = "This is endpoint to update an passport by id.", description = "Update request to update an passport by id.", tags = {"Passport"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "UPTADED. The requested passport is updateded successfully."),
             @ApiResponse(responseCode = "400", description = "Invalid input"),
-            @ApiResponse(responseCode = "404", description = "NOT FOUND. Specified passport request not found.")})
-    ResponseDto refreshPassport( @RequestBody Integer id, @RequestBody RequestDto passportDto);
+            @ApiResponse(responseCode = "404", description = "NOT FOUND. Specified employee request not found.")})
+    ResponseDto refreshPassport(Integer id, RequestDto  requestDto);
 
 }

@@ -194,4 +194,9 @@ public class EmployeeControllerBean implements EmployeeController {
         log.info("----> metricsByCountry() - end: ");
     }
 
+    @Override
+    @PatchMapping("/addPassport")
+    @ResponseStatus(HttpStatus.OK)
+    public void addPassport(@RequestParam Integer employeeId, @RequestParam Integer passportId) {
+    }
 }

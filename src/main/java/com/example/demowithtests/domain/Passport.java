@@ -22,5 +22,8 @@ public class Passport {
     private String secondName;
     private LocalDate birthDate;
 
+    @OneToOne(mappedBy = "passport")
+    private Employee employee;
+
 
 }

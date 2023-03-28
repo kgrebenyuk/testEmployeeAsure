@@ -1,12 +1,12 @@
-package com.example.demowithtests.util.config;
+package com.example.demowithtests.util.mupstruct;
 
 import com.example.demowithtests.domain.Employee;
-import com.example.demowithtests.dto.EmployeeDto;
-import com.example.demowithtests.dto.EmployeeReadDto;
+import com.example.demowithtests.dto.Employee.EmployeeDto;
+import com.example.demowithtests.dto.Employee.EmployeeReadDto;
 import org.mapstruct.Mapping;
 
 @org.mapstruct.Mapper(componentModel = "spring")
-public interface Mapper {
+public interface EmployeeMapper {
 
     @Mapping(target="name", source="employeeDto.name")
     @Mapping(target="country", source="employeeDto.country")

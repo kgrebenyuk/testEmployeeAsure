@@ -1,10 +1,7 @@
-package com.example.demowithtests.dto;
+package com.example.demowithtests.dto.Employee;
 
-import com.example.demowithtests.domain.Address;
-import com.example.demowithtests.domain.Foto;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-import javax.persistence.Entity;
 import java.time.Instant;
 import java.util.Date;
 import java.util.HashSet;

@@ -1,9 +1,12 @@
-package com.example.demowithtests.service;
+package com.example.demowithtests.service.Employee;
 
 import com.example.demowithtests.domain.Employee;
 import com.example.demowithtests.repository.EmployeeRepository;
 import com.example.demowithtests.util.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
@@ -18,14 +21,16 @@ import java.util.List;
 
 
 //@AllArgsConstructor
+//@AllArgsConstructor
+//@NoArgsConstructor
+@Service
 @Slf4j
-@org.springframework.stereotype.Service
-public class ServiceBean implements Service {
+public class EmployeeServiceBean implements EmployeeService {
     private final EmployeeRepository repository;
 
-    //  private static final Logger log = Logger.getLogger(ServiceBean.class.getName());
+    //  private static final Logger log = Logger.getLogger(EmployeeServiceBean.class.getName());
 
-    public ServiceBean(EmployeeRepository repository) {
+    public EmployeeServiceBean(EmployeeRepository repository) {
         this.repository = repository;
     }
 
@@ -52,12 +57,12 @@ public class ServiceBean implements Service {
     }
 
     @Override
-    public Employee getById(String id) {
+    public Employee getById(Integer id) {
         // log.debug("----> getById() - start: id = {}", id);
 
         try {
-            Integer employeeId = Integer.parseInt(id);
-            Employee employee = repository.findById(employeeId)
+           // Integer employeeId = Integer.parseInt(id);
+            Employee employee = repository.findById(id)
                     .orElseThrow(IdIsNotExistException::new);
             if (employee.getIsDeleted()) {
                 throw new ResourceWasDeletedException();

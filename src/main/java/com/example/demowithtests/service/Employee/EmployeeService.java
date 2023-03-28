@@ -1,19 +1,17 @@
-package com.example.demowithtests.service;
+package com.example.demowithtests.service.Employee;
 
 import com.example.demowithtests.domain.Employee;
 import com.example.demowithtests.util.UserIsNotExistException;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 
-public interface Service {
+public interface EmployeeService {
 
     Employee create(Employee employee);
 
     List<Employee> getAll();
 
-    Employee getById(String id);
+    Employee getById(Integer id);
 
     Employee updateById(Integer id, Employee plane) throws UserIsNotExistException;
 

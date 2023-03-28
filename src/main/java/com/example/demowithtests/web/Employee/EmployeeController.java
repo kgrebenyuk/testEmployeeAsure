@@ -1,13 +1,11 @@
-package com.example.demowithtests.web;
+package com.example.demowithtests.web.Employee;
 
 import com.example.demowithtests.domain.Employee;
-import com.example.demowithtests.dto.EmployeeDto;
-import com.example.demowithtests.dto.EmployeeReadDto;
+import com.example.demowithtests.dto.Employee.EmployeeDto;
+import com.example.demowithtests.dto.Employee.EmployeeReadDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import lombok.SneakyThrows;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,7 +25,7 @@ public interface EmployeeController {
             @ApiResponse(responseCode = "201", description = "SELECTED. The requested employee is successfully returned."),
             @ApiResponse(responseCode = "400", description = "Invalid input"),
             @ApiResponse(responseCode = "404", description = "NOT FOUND. Specified employee request not found.")})
-    EmployeeReadDto getEmployeeById(@PathVariable String id);
+    EmployeeReadDto getEmployeeById(@PathVariable Integer id);
 
     @Operation(summary = "This is endpoint to get all employees.", description = "Create request to get all employees.", tags = {"Employee"})
     @ApiResponses(value = {

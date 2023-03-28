@@ -2,22 +2,24 @@ package com.example.demowithtests.domain;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.UUID;
 
-@Data
-@ToString
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "passports")
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Data
 public class Passport {
-    private int id;
-    private String fisrtName;
-    private String secondName;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private final  UUID serialNumber = UUID.randomUUID();
+    private String firstName;
+    private String secondName;
     private LocalDate birthDate;
 
 

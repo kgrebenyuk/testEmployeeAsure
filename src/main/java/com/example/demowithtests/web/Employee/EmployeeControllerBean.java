@@ -199,4 +199,11 @@ public class EmployeeControllerBean implements EmployeeController {
     @ResponseStatus(HttpStatus.OK)
     public void addPassport(@RequestParam Integer employeeId, @RequestParam Integer passportId) {
     }
+
+    @Override
+    @PutMapping("/addPassport")
+    @ResponseStatus(HttpStatus.OK)
+    public void addPassport(@RequestParam Integer employeeId) {
+    }
+
 }

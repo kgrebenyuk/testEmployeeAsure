@@ -77,4 +77,17 @@ public class PassportControllerBean implements PassportController {
         log.info("----> refreshPassport() - start: {}",  id ,  responceDto );
         return responceDto;
     }
+
+//    @Override
+//    //  @SneakyThrows
+//    @PutMapping("/passports/{id}")
+//    @ResponseStatus(HttpStatus.OK)
+//    public ResponseDto refreshPassport(Integer id, RequestDto  requestDto) {
+//        log.info("----> refreshPassport() - start: {}",  id ,  requestDto );
+//        ResponseDto responceDto = passportMapper.toResponseDto(
+//                passportService.updateById(id, passportMapper.fromRequestDto( requestDto)));
+//        log.info("----> refreshPassport() - start: {}",  id ,  responceDto );
+//        return responceDto;
+//    }
+
 }

@@ -21,6 +21,7 @@ public class Passport {
     private String firstName;
     private String secondName;
     private LocalDate birthDate;
+    private Boolean isFree = Boolean.TRUE;
 
     @OneToOne(mappedBy = "passport")
     private Employee employee;

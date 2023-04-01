@@ -23,8 +23,8 @@ public interface EmployeeMapper {
     @Mapping(target="addresses", source="employee.addresses")
     EmployeeDto  employeeToEmployeeDto(Employee employee);
 
-    @Mapping(target="name", source="employee.name")
-    @Mapping(target="email", source="employee.email")
+//    @Mapping(target="name", source="employee.name")
+//    @Mapping(target="email", source="employee.email")
     EmployeeReadDto employeeToEmployeeReadDto(Employee employee);
 
     @Mapping(target="name", source="employeeReadDto.name")

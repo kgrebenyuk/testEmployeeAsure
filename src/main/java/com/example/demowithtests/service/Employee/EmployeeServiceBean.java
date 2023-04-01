@@ -288,4 +288,20 @@ public class EmployeeServiceBean implements EmployeeService {
         log.info("----> addPassport() - end: EmployeeReadDto = {}", employeeId, passportId);
         return employeeRepository.save(employee);
     }
+
+    @Override
+    public Employee addPassport(Integer employeeId) {
+        log.info("----> addPassport() - start: ", employeeId);
+        Employee employee = employeeRepository.findById(employeeId).orElseThrow(IdIsNotExistException::new);
+
+        Passport passport = passportRepository.findAll().stream()
+                .filter(e ->e.getIsFree())
+                .findFirst().orElseThrow(IdIsNotExistException::new);
+
+//        Passport passport = passportRepository.findById(passportId).orElseThrow(IdIsNotExistException::new);
+//        employee.setPassport(passport);
+        log.info("----> addPassport() - end: EmployeeReadDto = {}", employeeId);
+        return employeeRepository.save(employee);
+    }
+
 }

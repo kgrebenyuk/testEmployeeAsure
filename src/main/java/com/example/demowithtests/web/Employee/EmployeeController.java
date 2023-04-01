@@ -122,4 +122,6 @@ public interface EmployeeController {
             @ApiResponse(responseCode = "400", description = "Invalid input"),
             @ApiResponse(responseCode = "404", description = "NOT FOUND. Specified passport request not found.")})
     void addPassport(@RequestParam Integer employeeId, @RequestParam Integer passportId);
+
+    void  addPassport(@RequestParam Integer employeeId);
 }

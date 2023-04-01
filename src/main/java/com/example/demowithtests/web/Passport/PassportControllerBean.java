@@ -1,8 +1,8 @@
 package com.example.demowithtests.web.Passport;
 
 import com.example.demowithtests.domain.Passport;
-import com.example.demowithtests.dto.Passport.RequestDto;
-import com.example.demowithtests.dto.Passport.ResponseDto;
+import com.example.demowithtests.dto.Passport.PassportRequestDto;
+import com.example.demowithtests.dto.Passport.PassportResponseDto;
 import com.example.demowithtests.service.Passport.PassportService;
 import com.example.demowithtests.util.mupstruct.PassportMapper;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -24,70 +24,51 @@ public class PassportControllerBean implements PassportController {
     private final PassportService passportService;
     private final PassportMapper passportMapper;
 
-
-//    public PassportControllerBean(PassportService passportService, PassportMapper passportMapper) {
-//        this.passportService = passportService;
-//        this.passportMapper = passportMapper;
-//    }
-
     @Override
     @PostMapping("/passports")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseDto savePassport(RequestDto requestDto) {
-        log.info("----> savePassport - start: requestDto = {}", requestDto);
-        Passport passport = passportMapper.fromRequestDto(requestDto);
-        ResponseDto responseDto = passportMapper.toResponseDto(passportService.create(passport));
-        log.info("----> savePassport - end: ResponseDto = {}", responseDto);
-        return responseDto;
+    public PassportResponseDto savePassport(PassportRequestDto passportRequestDto) {
+        log.info("----> savePassport - start: passportRequestDto = {}", passportRequestDto);
+        Passport passport = passportMapper.fromRequestDto(passportRequestDto);
+        PassportResponseDto passportResponseDto = passportMapper.toResponseDto(passportService.create(passport));
+        log.info("----> savePassport - end: PassportResponseDto = {}", passportResponseDto);
+        return passportResponseDto;
     }
 
     @Override
     @GetMapping(value = "/passports/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseDto getPassportById(Integer id) {
+    public PassportResponseDto getPassportById(Integer id) {
         log.info("----> getPassportById - start: id = {}", id);
         Passport passport = passportService.getById(id);
-        ResponseDto responseDto = passportMapper.toResponseDto(passport);
-        log.info("----> getPassportById - end: ResponseDto = {}", responseDto);
-        return responseDto;
+        PassportResponseDto passportResponseDto = passportMapper.toResponseDto(passport);
+        log.info("----> getPassportById - end: PassportResponseDto = {}", passportResponseDto);
+        return passportResponseDto;
     }
 
     @Override
     @GetMapping("/passports")
     @ResponseStatus(HttpStatus.OK)
-    public List<ResponseDto> getAllPassports() {
+    public List<PassportResponseDto> getAllPassports() {
         log.info("----> getAllPassports() - start: ");
         List<Passport> passports = passportService.getAll();
-        List<ResponseDto> responseDtos = new ArrayList<>();
+        List<PassportResponseDto> PassportResponseDtos = new ArrayList<>();
         for (Passport passport : passports) {
-            responseDtos.add(passportMapper.toResponseDto(passport));
+            PassportResponseDtos.add(passportMapper.toResponseDto(passport));
         }
-        log.info("----> getAllPassports()  - end:  responseDto =  {}", responseDtos);
-        return responseDtos;
+        log.info("----> getAllPassports()  - end:  responseDto =  {}", PassportResponseDtos);
+        return PassportResponseDtos;
     }
 
     @Override
-    //  @SneakyThrows
     @PutMapping("/passports/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseDto refreshPassport(Integer id, RequestDto  requestDto) {
-        log.info("----> refreshPassport() - start: {}",  id ,  requestDto );
-        ResponseDto responceDto = passportMapper.toResponseDto(
-                passportService.updateById(id, passportMapper.fromRequestDto( requestDto)));
-        log.info("----> refreshPassport() - start: {}",  id ,  responceDto );
+    public PassportResponseDto refreshPassport(Integer id, PassportRequestDto passportRequestDto) {
+        log.info("----> refreshPassport() - start: {}", id, passportRequestDto);
+        PassportResponseDto responceDto = passportMapper.toResponseDto(
+                passportService.updateById(id, passportMapper.fromRequestDto(passportRequestDto)));
+        log.info("----> refreshPassport() - start: {}", id, responceDto);
         return responceDto;
     }
-
-//    @Override
-//    //  @SneakyThrows
-//    @PutMapping("/passports/{id}")
-//    @ResponseStatus(HttpStatus.OK)
-//    public ResponseDto refreshPassport(Integer id, RequestDto  requestDto) {
-//        log.info("----> refreshPassport() - start: {}",  id ,  requestDto );
-//        ResponseDto responceDto = passportMapper.toResponseDto(
-//                passportService.updateById(id, passportMapper.fromRequestDto( requestDto)));
-//        log.info("----> refreshPassport() - start: {}",  id ,  responceDto );
-//        return responceDto;
-//    }
 
 }

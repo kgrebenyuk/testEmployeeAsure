@@ -17,14 +17,11 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 
     List<Employee> findEmployeeByIsDeletedIsTrue();
 
-
     @Query(value = " select e from Employee e where e.country=:country")
     List<Employee> findEmployeeByCountry(String country);
 
     @Query(value = "select e from Employee e join e.addresses a where a.city=:city")
     List<Employee> findEmployeeByAddresses(String city);
-
-    static void saveAllSmart(List<Employee> employees) { }  ;
 
     List<Employee> findEmployeeByIsDeletedNull();
 

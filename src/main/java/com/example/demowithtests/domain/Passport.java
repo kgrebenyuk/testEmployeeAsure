@@ -4,6 +4,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -26,5 +28,8 @@ public class Passport {
     @OneToOne(mappedBy = "passport")
     private Employee employee;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "passport_id")
+    private Set<Registration> registrations = new HashSet<>();
 
 }

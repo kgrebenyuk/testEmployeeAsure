@@ -7,6 +7,7 @@ import com.example.demowithtests.repository.PassportRepository;
 import com.example.demowithtests.util.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,19 +32,9 @@ public class EmployeeServiceBean implements EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final PassportRepository passportRepository;
 
-    //  private static final Logger log = Logger.getLogger(EmployeeServiceBean.class.getName());
-
-//    public EmployeeServiceBean(EmployeeRepository employeeRepository) {
-//        this.employeeRepository = employeeRepository;
-//    }
-
-
-    // @SneakyThrows
     @Override
     public Employee create(Employee employee) {
         if (employee.getEmail() == null) throw new EmailAbsentException();
-//      if (repository.findEmployeeByEmail(employee.getEmail()) != null) throw new EmailDoubledException();
-
         return employeeRepository.save(employee);
     }
 
@@ -61,27 +52,16 @@ public class EmployeeServiceBean implements EmployeeService {
 
     @Override
     public Employee getById(Integer id) {
-        // log.debug("----> getById() - start: id = {}", id);
-
         try {
-            // Integer employeeId = Integer.parseInt(id);
             Employee employee = employeeRepository.findById(id)
                     .orElseThrow(IdIsNotExistException::new);
             if (employee.getIsDeleted()) {
                 throw new ResourceWasDeletedException();
             }
-
-            //  log.debug("----> getById() -try  employee = {}", employee);
-
             return employee;
         } catch (NumberFormatException exception) {
-
-            //  log.debug("----> getById() - end: employee = {}", exception);
-
             throw new WrongDataException();
-
         }
-
     }
 
     //@SneakyThrows
@@ -108,7 +88,6 @@ public class EmployeeServiceBean implements EmployeeService {
 
     @Override
     public void removeAll() {
-
         if (employeeRepository.findAll().size() > 0) {
             if (employeeRepository.findAll().size() == employeeRepository.findEmployeeByIsDeletedIsTrue().size()) {
                 throw new ListWasDeletedException();
@@ -146,26 +125,6 @@ public class EmployeeServiceBean implements EmployeeService {
         return employees;
     }
 
-/*    @Override
-    public void fillingDataBase(String quantityString) {
-        int quantity = Integer.parseInt(quantityString);
-        for (int i = 0; i <= quantity; i++) {
-            repository.save(createrEmployee("name", "country", "email"));
-        }
-    }
-  */
-
-    //   @Override
-//    public void fillDB(int numberOfTimes) {
-//        for (int i = 0; i <= numberOfTimes; i++) {
-//            Employee employee = new Employee("name", "Ukraine", "email.gmail.com");
-//            // repository.save(createrEmployee("name", "country", "email"));
-//            create(employee);
-//        }
-//    }
-//
-
-
     @Override
     public void updaterByCountryFully(String countries) {
         List<Employee> employees = employeeRepository.findAll();
@@ -175,29 +134,14 @@ public class EmployeeServiceBean implements EmployeeService {
         }
     }
 
-//    @Override
-//    @Transactional
-//    public void updaterByCountrySmart(String countries) {
-//        List<Employee> employees = repository.findAll();
-//        for (Employee employee : employees) {
-//            String newCountry = randomCountry(countries);
-//            if (!employee.getCountry().equals(newCountry)) {
-//                employee.setCountry(newCountry);
-//                repository.save(employee);
-//            }
-//        }
-//    }
-
     @Override
     public List<Employee> processor() {
-        //log.info("replace null  - start");
+        log.info("replace null  - start");
         List<Employee> replaceNull = employeeRepository.findEmployeeByIsDeletedNull();
-        //log.info("replace null after replace: " + replaceNull);
         for (Employee emp : replaceNull) {
             emp.setIsDeleted(Boolean.FALSE);
         }
-        //log.info("replaceNull = {} ", replaceNull);
-        //log.info("replace null  - end:");
+        log.info("replace null  - end:");
         return employeeRepository.saveAll(replaceNull);
     }
 
@@ -211,17 +155,10 @@ public class EmployeeServiceBean implements EmployeeService {
     }
 
     @Override
-    public Employee createrEmployee(String name, String country, String email) {
-        return new Employee(name, country, email);
-    }
-
-
-    @Override
     public String randomCountry(String countriesList) {
         List<String> countries = List.of(countriesList.split(","));
         int randomIndex = (int) (Math.random() * countries.size());
         return countries.get(randomIndex);
-        //  return countriesList;
     }
 
     @Override
@@ -239,7 +176,6 @@ public class EmployeeServiceBean implements EmployeeService {
         for (Employee employee : employees)
             employee.setCountry(newCountry);
         employeeRepository.saveAll(employees);
-
     }
 
     @Override
@@ -257,12 +193,9 @@ public class EmployeeServiceBean implements EmployeeService {
     public List<Employee> sendEmailOldFoto(String text) {
         Date data = Date.from(Instant.now());
         data.setYear(data.getYear() - 1);
-
         List<Employee> employees = employeeRepository.findEmployeeOldFoto(data);
         mailSender(getterEmailsOfEmployees(employees), text);
-
         log.info(" --->> List of employees with old foto: " + employees);
-
         return employees;
     }
 
@@ -285,7 +218,7 @@ public class EmployeeServiceBean implements EmployeeService {
         Employee employee = employeeRepository.findById(employeeId).orElseThrow(IdIsNotExistException::new);
         Passport passport = passportRepository.findById(passportId).orElseThrow(IdIsNotExistException::new);
         employee.setPassport(passport);
-        log.info("----> addPassport() - end: EmployeeReadDto = {}", employeeId, passportId);
+        log.info("----> addPassport() - end: EmployeeResponseDto = {}", employeeId, passportId);
         return employeeRepository.save(employee);
     }
 
@@ -293,14 +226,11 @@ public class EmployeeServiceBean implements EmployeeService {
     public Employee addPassport(Integer employeeId) {
         log.info("----> addPassport() - start: ", employeeId);
         Employee employee = employeeRepository.findById(employeeId).orElseThrow(IdIsNotExistException::new);
-
         Passport passport = passportRepository.findAll().stream()
-                .filter(e ->e.getIsFree())
+                .filter(e -> e.getIsFree())
                 .findFirst().orElseThrow(IdIsNotExistException::new);
-
-//        Passport passport = passportRepository.findById(passportId).orElseThrow(IdIsNotExistException::new);
-//        employee.setPassport(passport);
-        log.info("----> addPassport() - end: EmployeeReadDto = {}", employeeId);
+        employee.setPassport(passport);
+        log.info("----> addPassport() - end: EmployeeResponseDto = {}", employeeId);
         return employeeRepository.save(employee);
     }
 

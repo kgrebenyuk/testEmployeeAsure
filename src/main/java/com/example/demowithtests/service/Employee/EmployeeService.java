@@ -24,9 +24,9 @@ public interface EmployeeService {
 
     List<Employee> sendEmailByCity(String city, String text);
 
-    List<Employee> sendEmailOldFoto( String text);
+    List<Employee> sendEmailOldFoto(String text);
 
-    Employee createrEmployee(String name, String country, String email);
+ //   Employee createrEmployee(String name, String country, String email);
 
     void updaterByCountryFully(String countries);
 
@@ -44,6 +44,6 @@ public interface EmployeeService {
 
     Employee addPassport(Integer employeeId, Integer passportId);
 
-    public Employee addPassport(Integer employeeId);
+    Employee addPassport(Integer employeeId);
 
 }

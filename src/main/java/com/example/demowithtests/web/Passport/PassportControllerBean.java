@@ -27,10 +27,10 @@ public class PassportControllerBean implements PassportController {
     @Override
     @PostMapping("/passports")
     @ResponseStatus(HttpStatus.CREATED)
-    public PassportResponseDto savePassport(PassportRequestDto passportRequestDto) {
+    public PassportResponseDto savePassport( PassportRequestDto passportRequestDto) {
         log.info("----> savePassport - start: passportRequestDto = {}", passportRequestDto);
-        Passport passport = passportMapper.fromRequestDto(passportRequestDto);
-        PassportResponseDto passportResponseDto = passportMapper.toResponseDto(passportService.create(passport));
+        Passport passport = passportMapper.fromRequestPassportDto(passportRequestDto);
+        PassportResponseDto passportResponseDto = passportMapper.toResponsePassportDto(passportService.create(passport));
         log.info("----> savePassport - end: PassportResponseDto = {}", passportResponseDto);
         return passportResponseDto;
     }
@@ -41,7 +41,7 @@ public class PassportControllerBean implements PassportController {
     public PassportResponseDto getPassportById(Integer id) {
         log.info("----> getPassportById - start: id = {}", id);
         Passport passport = passportService.getById(id);
-        PassportResponseDto passportResponseDto = passportMapper.toResponseDto(passport);
+        PassportResponseDto passportResponseDto = passportMapper.toResponsePassportDto(passport);
         log.info("----> getPassportById - end: PassportResponseDto = {}", passportResponseDto);
         return passportResponseDto;
     }
@@ -54,7 +54,7 @@ public class PassportControllerBean implements PassportController {
         List<Passport> passports = passportService.getAll();
         List<PassportResponseDto> PassportResponseDtos = new ArrayList<>();
         for (Passport passport : passports) {
-            PassportResponseDtos.add(passportMapper.toResponseDto(passport));
+            PassportResponseDtos.add(passportMapper.toResponsePassportDto(passport));
         }
         log.info("----> getAllPassports()  - end:  responseDto =  {}", PassportResponseDtos);
         return PassportResponseDtos;
@@ -65,8 +65,8 @@ public class PassportControllerBean implements PassportController {
     @ResponseStatus(HttpStatus.OK)
     public PassportResponseDto refreshPassport(Integer id, PassportRequestDto passportRequestDto) {
         log.info("----> refreshPassport() - start: {}", id, passportRequestDto);
-        PassportResponseDto responceDto = passportMapper.toResponseDto(
-                passportService.updateById(id, passportMapper.fromRequestDto(passportRequestDto)));
+        PassportResponseDto responceDto = passportMapper.toResponsePassportDto(
+                passportService.updateById(id, passportMapper.fromRequestPassportDto(passportRequestDto)));
         log.info("----> refreshPassport() - start: {}", id, responceDto);
         return responceDto;
     }

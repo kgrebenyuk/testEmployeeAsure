@@ -107,7 +107,7 @@ public interface EmployeeController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "SENT. Employees by 'fromCountry', 'toCountry' are informed successfully."),
             @ApiResponse(responseCode = "400", description = "Invalid input")})
-    void metricsByCountry(@RequestParam String fromCountry, @RequestParam String toCountry, @RequestParam String text);
+    List<String> metricsByCountry(@RequestParam String fromCountry, @RequestParam String toCountry, @RequestParam String text);
 
     @Operation(summary = "This is endpoint to add the passport to employee.", description = "Update request to add an passport to employee.", tags = {"Passport"})
     @ApiResponses(value = {

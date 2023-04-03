@@ -13,20 +13,11 @@ public interface PassportMapper {
 //    @Mapping(target="fotos", source="employeeDto.fotos")
 //    @Mapping(target="addresses", source="employeeDto.addresses")
 //    @Mapping(target="isDeleted", source="employeeDto.isDeleted")
-    Passport fromRequestDto(PassportRequestDto passportRequestDto);
+    Passport fromRequestPassportDto(PassportRequestDto passportRequestDto);
 
-//    @Mapping(target="name", source="employee.name")
-//    @Mapping(target="country", source="employee.country")
-//    @Mapping(target="email", source="employee.email")
-//    @Mapping(target="fotos", source="employee.fotos")
-//    @Mapping(target="addresses", source="employee.addresses")
-    PassportRequestDto passportToRequestDto(Passport passport);
+//    PassportRequestDto passportToRequestDto(Passport passport);
 
-//    @Mapping(target="name", source="employee.name")
-//    @Mapping(target="email", source="employee.email")
-    PassportResponseDto toResponseDto(Passport passport);
+    PassportResponseDto toResponsePassportDto(Passport passport);
 
-//    @Mapping(target="name", source="employeeReadDto.name")
-//    @Mapping(target="email", source="employeeReadDto.email")
-    Passport responseDtoToPassport(PassportResponseDto passportResponseDto);
+ //   Passport responseDtoToPassport(PassportResponseDto passportResponseDto);
 }

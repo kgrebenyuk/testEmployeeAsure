@@ -43,9 +43,9 @@ public class EmployeeControllerBean implements EmployeeController {
     //   public EmployeeRequestDto saveEmployee(@RequestBody EmployeeRequestDto employeeRequestDto) {
     public EmployeeResponseDto saveEmployee(@RequestBody EmployeeRequestDto employeeRequestDto) {
         log.info("----> saveEmployee - start: EmployeeRequestDto = {}", employeeRequestDto);
-        Employee employee = employeeMapper.employeeDtoToEmployee(employeeRequestDto);
+        Employee employee = employeeMapper.fromRequestEmployeeDTO(employeeRequestDto);
         //   EmployeeRequestDto dto = employeeMapper.employeeToEmployeeDto(employeeService.create(employee));
-        EmployeeResponseDto dto = employeeMapper.employeeToEmployeeReadDto(employeeService.create(employee));
+        EmployeeResponseDto dto = employeeMapper.toResponseEmployeeDTO(employeeService.create(employee));
         log.info("----> saveEmployee - end: EmployeeRequestDto = {}", dto);
         return dto;
     }
@@ -60,7 +60,7 @@ public class EmployeeControllerBean implements EmployeeController {
         List<EmployeeResponseDto> employeesReadDto = new ArrayList<>();
         for (Employee employee : employees) {
             employeesReadDto.add(
-                    employeeMapper.employeeToEmployeeReadDto(employee));
+                    employeeMapper.toResponseEmployeeDTO(employee));
         }
         log.info("----> getAllUsers()  - end:  employeesReadDto =  {}", employeesReadDto);
         return employeesReadDto;
@@ -72,7 +72,7 @@ public class EmployeeControllerBean implements EmployeeController {
     @ResponseStatus(HttpStatus.OK)
     public EmployeeResponseDto getEmployeeById(@PathVariable Integer id) {
         log.info("----> getEmployeeById() - start: id = {}" + id);
-        EmployeeResponseDto eRDTO = employeeMapper.employeeToEmployeeReadDto(employeeService.getById(id));
+        EmployeeResponseDto eRDTO = employeeMapper.toResponseEmployeeDTO(employeeService.getById(id));
         log.info("----> getEmployeeById() - end: EmployeeResponseDto = {}", eRDTO);
         return eRDTO;
     }
@@ -86,8 +86,8 @@ public class EmployeeControllerBean implements EmployeeController {
         log.info("----> refreshEmployee() - start: ");
         Integer parseId = Integer.parseInt(id);
         log.info("----> refreshEmployee() -  end: ");
-        return employeeMapper.employeeToEmployeeReadDto(
-                employeeService.updateById(parseId, employeeMapper.employeeDtoToEmployee(employeeRequestDto))
+        return employeeMapper.toResponseEmployeeDTO(
+                employeeService.updateById(parseId, employeeMapper.fromRequestEmployeeDTO(employeeRequestDto))
         );
     }
 
@@ -188,10 +188,11 @@ public class EmployeeControllerBean implements EmployeeController {
     @Override
     @GetMapping("/metricsByCountry")
     @ResponseStatus(HttpStatus.OK)
-    public void metricsByCountry(@RequestParam String fromCountry, @RequestParam String toCountry, @RequestParam String text) {
+    public List<String> metricsByCountry(@RequestParam String fromCountry, @RequestParam String toCountry, @RequestParam String text) {
         log.info("----> metricsByCountry() - start: ");
-        employeeService.metricsByCountry(fromCountry, toCountry, text);
         log.info("----> metricsByCountry() - end: ");
+        return employeeService.metricsByCountry(fromCountry, toCountry, text);
+
     }
 
     @Override
@@ -199,7 +200,7 @@ public class EmployeeControllerBean implements EmployeeController {
     @ResponseStatus(HttpStatus.OK)
     public EmployeeResponseDto addPassport(@RequestParam Integer employeeId, @RequestParam Integer passportId) {
         Employee  employee = employeeService.addPassport(employeeId, passportId);
-        EmployeeResponseDto employeeResponseDto = employeeMapper.employeeToEmployeeReadDto(employee);
+        EmployeeResponseDto employeeResponseDto = employeeMapper.toResponseEmployeeDTO(employee);
         return employeeResponseDto;
     }
     @Override
@@ -207,7 +208,7 @@ public class EmployeeControllerBean implements EmployeeController {
     @ResponseStatus(HttpStatus.OK)
     public EmployeeResponseDto addPassportSafe(@PathVariable Integer uid, @PathVariable Integer pid) {
         Employee  employee = employeeService.addPassport(uid, pid);
-        EmployeeResponseDto employeeResponseDto = employeeMapper.employeeToEmployeeReadDto(employee);
+        EmployeeResponseDto employeeResponseDto = employeeMapper.toResponseEmployeeDTO(employee);
         return employeeResponseDto;
     }
 

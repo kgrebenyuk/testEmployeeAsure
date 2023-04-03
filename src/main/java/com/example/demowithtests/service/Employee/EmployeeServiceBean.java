@@ -200,7 +200,7 @@ public class EmployeeServiceBean implements EmployeeService {
     }
 
     @Override
-    public void metricsByCountry(String fromCountry, String toCountry, String text) {
+    public List<String> metricsByCountry(String fromCountry, String toCountry, String text) {
 //    public List<Employee> metricsByCountry(String fromCountry, String toCountry) {
 //        List<Employee> allEmployee = repository.findEmployeeChangedCountry(country);
 //
@@ -208,8 +208,9 @@ public class EmployeeServiceBean implements EmployeeService {
 //                .filter(employee -> employee.getAddresses().stream()
 //                        .anyMatch(address -> address.getCountry().equals(country)))
 //                .collect(Collectors.toList());
-
-        mailSender(employeeRepository.findEmployeeChangedCountry(fromCountry, toCountry), text);
+        List<String> emailsList= employeeRepository.findEmployeeChangedCountry(fromCountry, toCountry);
+        mailSender(emailsList, text);
+        return emailsList;
     }
 
     @Override

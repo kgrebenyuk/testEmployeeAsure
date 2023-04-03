@@ -40,7 +40,7 @@ public interface EmployeeService {
 
     void updateAllByCountrySmart(String oldCountry, String newCountry);
 
-    void metricsByCountry(String fromCountry, String toCountry, String text);
+    List<String> metricsByCountry(String fromCountry, String toCountry, String text);
 
     Employee addPassport(Integer employeeId, Integer passportId);
 

@@ -28,7 +28,7 @@ server:
 #Logger configuration
 logging:
   pattern:
-    console: "%d %-5Level %logger : %msg%n"
+    console: "%d %p %C [%t] %m%n"
   level:
     com.example.demowithtests.service: info
     com.example.demowithtests.web: info

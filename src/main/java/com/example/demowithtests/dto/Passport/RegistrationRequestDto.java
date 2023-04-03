@@ -6,7 +6,7 @@ import java.time.Instant;
 import java.util.Date;
 
 
-public class RegistrationDto {
+public class RegistrationRequestDto {
     //  public Integer id;
 
     @Schema(description = "Info of regiastration.", example = "", required = false)

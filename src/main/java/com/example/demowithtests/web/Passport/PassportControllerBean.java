@@ -1,10 +1,13 @@
 package com.example.demowithtests.web.Passport;
 
+import com.example.demowithtests.domain.Employee;
 import com.example.demowithtests.domain.Passport;
 import com.example.demowithtests.dto.Passport.PassportRequestDto;
 import com.example.demowithtests.dto.Passport.PassportResponseDto;
 import com.example.demowithtests.service.Passport.PassportService;
+import com.example.demowithtests.util.mupstruct.EmployeeMapper;
 import com.example.demowithtests.util.mupstruct.PassportMapper;
+import com.example.demowithtests.util.mupstruct.RagistrationMapper;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +26,10 @@ import java.util.List;
 public class PassportControllerBean implements PassportController {
     private final PassportService passportService;
     private final PassportMapper passportMapper;
+ //   private  final RagistrationMapper registrationMapper;
+ //   private  final EmployeeMapper employeeMapper;
+
+
 
     @Override
     @PostMapping("/passports")
@@ -70,5 +77,6 @@ public class PassportControllerBean implements PassportController {
         log.info("----> refreshPassport() - start: {}", id, responceDto);
         return responceDto;
     }
+
 
 }

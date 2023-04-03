@@ -1,9 +1,5 @@
 package com.example.demowithtests.dto.Passport;
 
-import com.example.demowithtests.dto.Employee.AddressDto;
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDate;
@@ -21,5 +17,5 @@ public class PassportResponseDto {
     public String secondName;
     public LocalDate birthDate;
 
-    public Set<RegistrationDto> registrations = new HashSet<>();
+    public Set<RegistrationRequestDto> registrations = new HashSet<>();
 }

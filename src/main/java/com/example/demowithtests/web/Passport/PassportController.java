@@ -1,5 +1,6 @@
 package com.example.demowithtests.web.Passport;
 
+import com.example.demowithtests.domain.Employee;
 import com.example.demowithtests.dto.Passport.PassportResponseDto;
 import com.example.demowithtests.dto.Passport.PassportRequestDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,5 +41,6 @@ public interface PassportController {
             @ApiResponse(responseCode = "400", description = "Invalid input"),
             @ApiResponse(responseCode = "404", description = "NOT FOUND. Specified employee request not found.")})
     PassportResponseDto refreshPassport(Integer id, PassportRequestDto passportRequestDto);
+
 
 }

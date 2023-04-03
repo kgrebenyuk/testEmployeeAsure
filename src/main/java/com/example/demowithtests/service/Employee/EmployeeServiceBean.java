@@ -225,13 +225,13 @@ public class EmployeeServiceBean implements EmployeeService {
 
     @Override
     public Employee addPassport(Integer employeeId) {
-        log.info("----> addPassport() - start: ", employeeId);
+        log.info("----> addPassport2() - start: ", employeeId);
         Employee employee = employeeRepository.findById(employeeId).orElseThrow(IdIsNotExistException::new);
         Passport passport = passportRepository.findAll().stream()
                 .filter(e -> e.getIsFree())
                 .findFirst().orElseThrow(IdIsNotExistException::new);
         employee.setPassport(passport);
-        log.info("----> addPassport() - end: EmployeeResponseDto = {}", employeeId);
+        log.info("----> addPassport2() - end: EmployeeResponseDto = {}", employeeId);
         return employeeRepository.save(employee);
     }
 

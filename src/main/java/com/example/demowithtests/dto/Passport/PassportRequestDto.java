@@ -12,5 +12,5 @@ public class PassportRequestDto {
     public String firstName;
     public String secondName;
     public LocalDate birthDate;
-    public Set<RegistrationDto> registrations = new HashSet<>();
+    public Set<RegistrationRequestDto> registrations = new HashSet<>();
 }

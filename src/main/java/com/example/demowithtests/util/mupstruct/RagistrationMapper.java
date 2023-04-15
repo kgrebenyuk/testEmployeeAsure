@@ -6,8 +6,9 @@ import com.example.demowithtests.dto.Passport.PassportRequestDto;
 import com.example.demowithtests.dto.Passport.PassportResponseDto;
 import com.example.demowithtests.dto.Passport.RegistrationRequestDto;
 import com.example.demowithtests.dto.Passport.RegistrationResponseDto;
+import org.mapstruct.Mapper;
 
-@org.mapstruct.Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring")
 public interface RagistrationMapper {
 
 //    @Mapping(target="name", source="employeeDto.name")

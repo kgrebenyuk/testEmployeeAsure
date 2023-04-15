@@ -3,8 +3,9 @@ package com.example.demowithtests.util.mupstruct;
 import com.example.demowithtests.domain.Employee;
 import com.example.demowithtests.dto.Employee.EmployeeRequestDto;
 import com.example.demowithtests.dto.Employee.EmployeeResponseDto;
+import org.mapstruct.Mapper;
 
-@org.mapstruct.Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring")
 public interface EmployeeMapper {
 
 //    @Mapping(target="name", source="employeeRequestDto.name")

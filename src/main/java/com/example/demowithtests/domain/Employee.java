@@ -27,15 +27,19 @@ public class Employee {
     private String email;
     private Boolean isDeleted = Boolean.FALSE;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "employee_id")
     private Set<Address> addresses = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "employee_id")
     private Set<Foto> fotos = new HashSet<>();
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    private Set<Workplace> workplaces = new HashSet<>();
+
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "passport_id",referencedColumnName = "id")
     private Passport passport;
 

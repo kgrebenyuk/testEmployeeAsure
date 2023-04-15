@@ -2,8 +2,11 @@ package com.example.demowithtests.service.Employee;
 
 import com.example.demowithtests.domain.Employee;
 import com.example.demowithtests.domain.Passport;
+import com.example.demowithtests.domain.Workplace;
 import com.example.demowithtests.repository.EmployeeRepository;
 import com.example.demowithtests.repository.PassportRepository;
+import com.example.demowithtests.service.Passport.PassportService;
+import com.example.demowithtests.service.Workplace.WorkplaceService;
 import com.example.demowithtests.util.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,6 +34,12 @@ import java.util.List;
 public class EmployeeServiceBean implements EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final PassportRepository passportRepository;
+
+    private final PassportService passportService;
+
+    private final WorkplaceService workplaceService;
+
+
 
     @Override
     public Employee create(Employee employee) {
@@ -233,6 +242,19 @@ public class EmployeeServiceBean implements EmployeeService {
         employee.setPassport(passport);
         log.info("----> addPassport2() - end: EmployeeResponseDto = {}", employeeId);
         return employeeRepository.save(employee);
+    }
+
+    @Override
+    public Employee addWorkplace(Integer employeeId, Integer workplaceId) {
+        log.debug("Service ==> addWorkplace() - start: employeeId = {}, workplaceId = {}", employeeId, workplaceId);
+        Employee employee = employeeRepository.findById(employeeId)
+                .orElseThrow(ResourceNotFoundException::new);
+
+        Workplace workplace=workplaceService.getById(workplaceId);
+        employee.getWorkplaces().add(workplace);
+        employeeRepository.save(employee);
+        log.debug("Service ==> addWorkplace() - end: employee = {}", employee);
+        return employee;
     }
 
 }

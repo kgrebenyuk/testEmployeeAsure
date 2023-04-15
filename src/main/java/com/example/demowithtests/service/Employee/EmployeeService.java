@@ -46,4 +46,7 @@ public interface EmployeeService {
 
     Employee addPassport(Integer employeeId);
 
+    Employee addWorkplace(Integer employeeId, Integer workplaceId);
+
+
 }

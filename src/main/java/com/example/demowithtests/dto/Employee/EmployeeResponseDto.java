@@ -1,6 +1,7 @@
 package com.example.demowithtests.dto.Employee;
 
 import com.example.demowithtests.dto.Passport.PassportResponseDto;
+import com.example.demowithtests.dto.Workplace.WorkplaceResponseDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,4 +33,8 @@ public class EmployeeResponseDto {
 
     @Schema(description = "Passport of an employee.", example = "", required = true)
     public PassportResponseDto passport;
+
+    @Schema(description = "Workplace of an employee.", example = "", required = true)
+    public Set<WorkplaceResponseDto> workplaces;
+
 }

@@ -18,6 +18,6 @@ public class WorkplaceResponseDto {
     public String name;
     @Schema(description = "Info of address", example = "")
     public String address;
-    @Schema(description = "Info of employees", example = "")
-    public Set<Employee> employees = new HashSet<>();;
+//    @Schema(description = "Info of employees", example = "")
+//    public Set<Employee> employees = new HashSet<>();;
 }

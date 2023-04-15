@@ -23,7 +23,7 @@ public interface WorkplaceController {
     WorkplaceResponseDto saveWorkplace(@RequestBody WorkplaceRequestDto workplaceRequestDto);
 
 
-    @Operation(summary = "This is endpoint to get an passport by id.", description = "Create request to get an workplace by id.", tags = {"Workplace"})
+    @Operation(summary = "This is endpoint to get an workplace by id.", description = "Create request to get an workplace by id.", tags = {"Workplace"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "SELECTED. The requested workplace is successfully returned."),
             @ApiResponse(responseCode = "400", description = "Invalid input"),

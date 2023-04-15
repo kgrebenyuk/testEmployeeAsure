@@ -31,7 +31,7 @@ public class EmployeeControllerBean implements EmployeeController {
     private final EmployeeMapper employeeMapper;
 
     @Override
-     public EmployeeResponseDto saveEmployee(@RequestBody EmployeeRequestDto employeeRequestDto) {
+    public EmployeeResponseDto saveEmployee(@RequestBody EmployeeRequestDto employeeRequestDto) {
         log.info("----> saveEmployee - start: EmployeeRequestDto = {}", employeeRequestDto);
         Employee employee = employeeMapper.fromRequestEmployeeDTO(employeeRequestDto);
         EmployeeResponseDto dto = employeeMapper.toResponseEmployeeDTO(employeeService.create(employee));
@@ -167,11 +167,17 @@ public class EmployeeControllerBean implements EmployeeController {
     public EmployeeResponseDto addPassport(Integer employeeId) {
         log.info("----> addPassport() - start: ");
         Employee employee = employeeService.addPassport(employeeId);
-        EmployeeResponseDto employeeResponseDto = employeeMapper
-                .toResponseEmployeeDTO(employee);
-        log.info("----> addPassport() - end: ", employeeResponseDto);
+        EmployeeResponseDto employeeResponseDto = employeeMapper.toResponseEmployeeDTO(employee);
+        log.info("==>  addPassport() - end: employeeResponseDto = {}",   employeeResponseDto);
         return employeeResponseDto;
     }
 
+    @Override
+    public EmployeeResponseDto addWorkplace(Integer employeeId, Integer workplaceId) {
+        log.info("==> addWorkplace() - start: employeeId = {}, workplaceId = {}", employeeId, workplaceId);
+        EmployeeResponseDto employeeResponseDto = employeeMapper.toResponseEmployeeDTO(employeeService.addWorkplace(employeeId, workplaceId));
+        log.info("==> addWorkplace() - end: employeeResponseDto = {}", employeeResponseDto);
+        return employeeResponseDto;
+    }
 
 }

@@ -1,10 +1,7 @@
 package com.example.demowithtests.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -16,19 +13,18 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Data
-public class Workplace
-{
+@Getter
+@Setter
+public class Workplace {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
     private String address;
-    private Boolean isActive=Boolean.TRUE;
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy =  "workplaces")
+    private Boolean isActive = Boolean.TRUE;
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "workplaces")
     @JsonIgnore
-    private Set<Employee> employees = new HashSet<>();;
-
+    private Set<Employee> employees = new HashSet<>();
 
 
 }

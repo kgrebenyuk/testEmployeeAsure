@@ -159,4 +159,13 @@ public interface EmployeeController {
     @PutMapping("/users/{uid}/passports")
     @ResponseStatus(HttpStatus.OK)
     EmployeeResponseDto addPassport(@PathVariable("employeeId") Integer employeeId);
+
+    @Operation(summary = "This is endpoint to add the workplace to employee.", description = "Create request to add the workplace to employee.", tags = {"Employee"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Email successfully sent."),
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND. Specified employee request not found.")})
+    @PostMapping("/employee/{id}/workplace/{workplaceId}")
+    @ResponseStatus(HttpStatus.OK)
+    EmployeeResponseDto addWorkplace(@PathVariable("id") Integer id, @PathVariable("workplaceId") Integer workplaceId);
 }

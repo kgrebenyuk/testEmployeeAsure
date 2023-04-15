@@ -37,4 +37,7 @@ public class EmployeeResponseDto {
     @Schema(description = "Workplace of an employee.", example = "", required = true)
     public Set<WorkplaceResponseDto> workplaces;
 
+
+    @Schema(description = "errorMessage", example = "", required = false)
+    public String errorMessage;
 }

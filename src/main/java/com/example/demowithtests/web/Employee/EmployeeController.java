@@ -3,6 +3,7 @@ package com.example.demowithtests.web.Employee;
 import com.example.demowithtests.domain.Employee;
 import com.example.demowithtests.dto.Employee.EmployeeRequestDto;
 import com.example.demowithtests.dto.Employee.EmployeeResponseDto;
+import com.example.demowithtests.util.MyGlobalExceptionHandler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -165,7 +166,7 @@ public interface EmployeeController {
             @ApiResponse(responseCode = "201", description = "Email successfully sent."),
             @ApiResponse(responseCode = "400", description = "Invalid input"),
             @ApiResponse(responseCode = "404", description = "NOT FOUND. Specified employee request not found.")})
-    @PostMapping("/employee/{id}/workplace/{workplaceId}")
+    @PostMapping("/employee/{id}/workplace/{workplaceId}/maxEmployees/{maxEmployees}")
     @ResponseStatus(HttpStatus.OK)
-    EmployeeResponseDto addWorkplace(@PathVariable("id") Integer id, @PathVariable("workplaceId") Integer workplaceId);
+    EmployeeResponseDto addWorkplace(@PathVariable("id") Integer id, @PathVariable("workplaceId") Integer workplaceId, @PathVariable("maxEmployees") Integer maxEmployees) throws MyGlobalExceptionHandler;
 }

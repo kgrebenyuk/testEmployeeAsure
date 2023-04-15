@@ -7,6 +7,7 @@ import com.example.demowithtests.dto.Passport.PassportResponseDto;
 import com.example.demowithtests.service.Employee.EmployeeService;
 //import com.example.demowithtests.employeeService.EmployeeServiceBean;
 //import com.example.demowithtests.util.UserIsNotExistException;
+import com.example.demowithtests.util.MyGlobalExceptionHandler;
 import com.example.demowithtests.util.mupstruct.EmployeeMapper;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
@@ -168,14 +169,21 @@ public class EmployeeControllerBean implements EmployeeController {
         log.info("----> addPassport() - start: ");
         Employee employee = employeeService.addPassport(employeeId);
         EmployeeResponseDto employeeResponseDto = employeeMapper.toResponseEmployeeDTO(employee);
-        log.info("==>  addPassport() - end: employeeResponseDto = {}",   employeeResponseDto);
+        log.info("==>  addPassport() - end: employeeResponseDto = {}", employeeResponseDto);
         return employeeResponseDto;
     }
 
     @Override
-    public EmployeeResponseDto addWorkplace(Integer employeeId, Integer workplaceId) {
+    public EmployeeResponseDto addWorkplace(Integer employeeId, Integer workplaceId, Integer maxEmployees) {
         log.info("==> addWorkplace() - start: employeeId = {}, workplaceId = {}", employeeId, workplaceId);
-        EmployeeResponseDto employeeResponseDto = employeeMapper.toResponseEmployeeDTO(employeeService.addWorkplace(employeeId, workplaceId));
+
+        EmployeeResponseDto employeeResponseDto = new EmployeeResponseDto();
+        try {
+            employeeResponseDto = employeeMapper.toResponseEmployeeDTO(employeeService.addWorkplace(employeeId, workplaceId, maxEmployees));
+        } catch (MyGlobalExceptionHandler e) {
+            employeeResponseDto.errorMessage = e.getMessage();
+        }
+
         log.info("==> addWorkplace() - end: employeeResponseDto = {}", employeeResponseDto);
         return employeeResponseDto;
     }

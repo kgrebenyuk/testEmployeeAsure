@@ -2,6 +2,7 @@ package com.example.demowithtests.service.Employee;
 
 import com.example.demowithtests.domain.Employee;
 import com.example.demowithtests.domain.Passport;
+import com.example.demowithtests.util.MyGlobalExceptionHandler;
 import com.example.demowithtests.util.UserIsNotExistException;
 
 import java.util.List;
@@ -46,7 +47,7 @@ public interface EmployeeService {
 
     Employee addPassport(Integer employeeId);
 
-    Employee addWorkplace(Integer employeeId, Integer workplaceId);
+    Employee addWorkplace(Integer employeeId, Integer workplaceId, Integer maxEmployees) throws MyGlobalExceptionHandler;
 
 
 }

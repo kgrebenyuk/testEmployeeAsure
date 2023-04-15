@@ -5,6 +5,7 @@ import com.example.demowithtests.domain.Passport;
 import com.example.demowithtests.domain.Workplace;
 import com.example.demowithtests.repository.EmployeeRepository;
 import com.example.demowithtests.repository.PassportRepository;
+import com.example.demowithtests.repository.WorkplaceRepository;
 import com.example.demowithtests.service.Passport.PassportService;
 import com.example.demowithtests.service.Workplace.WorkplaceService;
 import com.example.demowithtests.util.*;
@@ -34,11 +35,11 @@ import java.util.List;
 public class EmployeeServiceBean implements EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final PassportRepository passportRepository;
+    private final WorkplaceRepository workplaceRepository;
 
     private final PassportService passportService;
 
     private final WorkplaceService workplaceService;
-
 
 
     @Override
@@ -217,7 +218,7 @@ public class EmployeeServiceBean implements EmployeeService {
 //                .filter(employee -> employee.getAddresses().stream()
 //                        .anyMatch(address -> address.getCountry().equals(country)))
 //                .collect(Collectors.toList());
-        List<String> emailsList= employeeRepository.findEmployeeChangedCountry(fromCountry, toCountry);
+        List<String> emailsList = employeeRepository.findEmployeeChangedCountry(fromCountry, toCountry);
         mailSender(emailsList, text);
         return emailsList;
     }
@@ -245,12 +246,18 @@ public class EmployeeServiceBean implements EmployeeService {
     }
 
     @Override
-    public Employee addWorkplace(Integer employeeId, Integer workplaceId) {
+    public Employee addWorkplace(Integer employeeId, Integer workplaceId, Integer maxEmployees) throws MyGlobalExceptionHandler {
         log.debug("Service ==> addWorkplace() - start: employeeId = {}, workplaceId = {}", employeeId, workplaceId);
         Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(ResourceNotFoundException::new);
 
-        Workplace workplace=workplaceService.getById(workplaceId);
+        Integer usedNumber = workplaceRepository.findNumberEmployeesInWorkplace(workplaceId);
+        if (maxEmployees <= usedNumber) {
+            log.info("Service ==> addWorkplace(): Not enough space in selected Workplace, already used = {}", usedNumber);
+            throw new MyGlobalExceptionHandler("Not enough space in selected Workplace, already used " +  usedNumber);
+        }
+
+        Workplace workplace = workplaceService.getById(workplaceId);
         employee.getWorkplaces().add(workplace);
         employeeRepository.save(employee);
         log.debug("Service ==> addWorkplace() - end: employee = {}", employee);

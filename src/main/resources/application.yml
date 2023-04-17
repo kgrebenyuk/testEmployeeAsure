@@ -4,8 +4,9 @@
     # Database
     datasource:
       driver-class-name: org.postgresql.Driver
-      url: jdbc:postgresql://localhost:5432/employee
-      username: postgres
+    #  url: jdbc:postgresql://localhost:5432/employee
+      url: jdbc:postgresql://testemployee-server.postgres.database.azure.com:5432/testemployee-database?sslmode=require&user=psjiqkmgkb&password=FK2074SG08ZI3N71%24
+      username: AZURE_POSTGRESQL_CONNECTIONSTRING
       password: 5
     # JPA properties
     jpa:
